@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "[GitHub Activity] ${{ github.event_name }} in ${{ github.repository }}"
-          to: idowuseyi21@gmail.com
+          to: tomi@theraptly.com
           from: GitHub Activity Bot
           body: |
             Event: ${{ github.event_name }}
