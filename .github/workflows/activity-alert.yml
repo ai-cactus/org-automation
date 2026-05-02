@@ -1,27 +1,59 @@
-name: Org Activity Alert
+name: Clean Reporting
 
 on:
-  workflow_call:
+  pull_request:
+    types: [ closed ]
 
 jobs:
   notify:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send Alert Email
+      - name: Send Clean Email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "[GitHub Activity] ${{ github.event_name }} in ${{ github.repository }}"
+          subject: "🚀 Work Delivered: ${{ github.event.pull_request.title }}"
           to: tomi@theraptly.com
-          from: GitHub Activity Bot
+          from: Product Updates
           body: |
-            Event: ${{ github.event_name }}
-            Repo: ${{ github.repository }}
-            Actor: ${{ github.actor }}
-            
-            Payload:
-            ${{ toJson(github.event) }}
+            🚀 Work Delivered
+
+            📌 Title: ${{ github.event.pull_request.title }}
+            👤 Author: ${{ github.event.pull_request.user.login }}
+            📦 Repo: ${{ github.repository }}
+
+            🔗 View PR:
+            ${{ github.event.pull_request.html_url }}
+
+# name: Org Activity Alert
+
+# on:
+#   workflow_call:
+
+# jobs:
+#   notify:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Send Alert Email
+#         uses: dawidd6/action-send-mail@v3
+#         with:
+#           server_address: smtp.gmail.com
+#           server_port: 465
+#           username: ${{ secrets.EMAIL_USERNAME }}
+#           password: ${{ secrets.EMAIL_PASSWORD }}
+#           subject: "[GitHub Activity] ${{ github.event_name }} in ${{ github.repository }}"
+#           to: tomi@theraptly.com
+#           from: GitHub Activity Bot
+#           body: |
+#             Event: ${{ github.event_name }}
+#             Repo: ${{ github.repository }}
+#             Actor: ${{ github.actor }}
+
+#             Payload:
+#             ${{ toJson(github.event) }}
