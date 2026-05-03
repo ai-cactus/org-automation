@@ -1,8 +1,7 @@
 name: Clean Reporting
 
 on:
-  pull_request:
-    types: [ closed ]
+  workflow_call:
 
 jobs:
   notify:
